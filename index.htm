@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Numlkzs | Roblox Developer</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Poppins',sans-serif;
+background:#0b0f1a;
+color:white;
+overflow-x:hidden;
+scroll-behavior:smooth;
+}
+
+/* PARTICLE CANVAS */
+canvas#bg{
+position:fixed;
+top:0; left:0;
+width:100%; height:100%;
+z-index:-2;
+}
+
+/* GLOW CURSOR */
+.cursor{
+position:fixed;
+width:20px; height:20px;
+border-radius:50%;
+background:#00f7ff;
+pointer-events:none;
+mix-blend-mode:screen;
+filter:blur(12px);
+z-index:10000;
+}
+
+/* NAVBAR */
+nav{
+position:fixed;
+width:100%;
+padding:18px 6%;
+display:flex;
+justify-content:space-between;
+align-items:center;
+background:rgba(0,0,0,0.7);
+backdrop-filter:blur(12px);
+z-index:1000;
+}
+nav h1{
+font-family:'Orbitron';
+color:#00f7ff;
+font-size:26px;
+letter-spacing:2px;
+}
+nav ul{
+display:flex;
+gap:25px;
+list-style:none;
+}
+nav ul li a{
+color:white;
+text-decoration:none;
+transition:.3s;
+font-weight:500;
+}
+nav ul li a:hover{color:#00f7ff;}
+
+/* HERO SECTION */
+.hero{
+height:100vh;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-align:center;
+position:relative;
+}
+.hero h2{
+font-size:60px;
+font-family:'Orbitron';
+text-shadow:0 0 30px #00f7ff;
+}
+.typing{
+margin-top:15px;
+font-size:22px;
+color:#00f7ff;
+letter-spacing:1px;
+}
+/* BLUE ROBLOX LOGO */
+.hero img{
+width:220px;
+border-radius:50%;
+margin-top:30px;
+box-shadow:0 0 50px #00f7ff;
+transition:.5s;
+}
+.hero img:hover{transform:scale(1.1);}
+.btn{
+margin-top:30px;
+padding:14px 36px;
+border-radius:30px;
+background:#00f7ff;
+color:black;
+font-weight:bold;
+text-decoration:none;
+transition:.3s;
+}
+.btn:hover{transform:scale(1.1);}
+
+/* SECTIONS */
+section{
+padding:120px 6%;
+opacity:0;
+transform:translateY(50px);
+transition:1s;
+}
+section.show{opacity:1; transform:translateY(0);}
+.section-title{
+text-align:center;
+font-family:'Orbitron';
+font-size:38px;
+margin-bottom:50px;
+color:#00f7ff;
+letter-spacing:1px;
+}
+
+/* GRID CARDS */
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+}
+.card{
+background:rgba(255,255,255,0.05);
+padding:30px;
+border-radius:20px;
+backdrop-filter:blur(18px);
+transition:.5s;
+transform-style:preserve-3d;
+}
+.card:hover{
+transform:translateY(-12px) rotateY(5deg) rotateX(5deg);
+box-shadow:0 0 40px #00f7ff;
+}
+
+/* SKILLS */
+.skill{margin-bottom:25px;}
+.skill span{display:block;margin-bottom:8px;}
+.bar{height:10px;background:#222;border-radius:6px;overflow:hidden;}
+.progress{height:10px;background:#00f7ff;width:0;transition:2s;}
+
+/* STATS */
+.stats{
+display:flex;
+justify-content:space-around;
+flex-wrap:wrap;
+gap:30px;
+text-align:center;
+}
+.stat h3{
+font-size:42px;
+color:#00f7ff;
+}
+
+/* TESTIMONIALS */
+.testimonial{
+background:rgba(255,255,255,0.05);
+padding:25px;
+border-radius:18px;
+margin-bottom:25px;
+backdrop-filter:blur(12px);
+}
+
+/* PROJECT IMAGES */
+.project-img{
+width:100%;
+border-radius:15px;
+margin-top:15px;
+box-shadow:0 0 25px #00f7ff;
+transition:.4s;
+}
+.project-img:hover{transform:scale(1.05);}
+
+/* FOOTER */
+footer{
+text-align:center;
+padding:50px;
+background:rgba(0,0,0,0.7);
+margin-top:50px;
+font-size:14px;
+}
+@media(max-width:768px){
+.hero h2{font-size:48px;}
+.typing{font-size:18px;}
+nav ul{flex-wrap:wrap;gap:15px;}
+}
+</style>
+</head>
+
+<body>
+
+<canvas id="bg"></canvas>
+<div class="cursor"></div>
+
+<nav>
+<h1>Numlkzs</h1>
+<ul>
+<li><a href="#about">About</a></li>
+<li><a href="#services">Services</a></li>
+<li><a href="#skills">Skills</a></li>
+<li><a href="#projects">Projects</a></li>
+<li><a href="#stats">Stats</a></li>
+<li><a href="#testimonials">Testimonials</a></li>
+<li><a href="#contact">Contact</a></li>
+</ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+<h2>Numlkzs</h2>
+<div class="typing" id="typing"></div>
+<!-- Blue Roblox logo placeholder -->
+<img src="data:image/png;base64,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" alt="Blue Roblox Logo">
+<a href="#contact" class="btn">Work With Me</a>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+<h2 class="section-title">About Me</h2>
+<p style="max-width:800px;margin:auto;text-align:center;">
+Numlkzs is a top Roblox developer specializing in advanced Lua scripting, combat systems,
+simulator mechanics, scalable backend data systems, and UI/UX design.
+Focused on creating polished, immersive experiences that keep players engaged.
+</p>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+<h2 class="section-title">Services</h2>
+<div class="grid">
+<div class="card"><h3>Game Systems</h3><p>Custom combat engines, simulators, tycoons, progression frameworks, round-based game systems.</p></div>
+<div class="card"><h3>UI / UX Design</h3><p>Modern animated interfaces, HUD systems, mobile-friendly layouts, and responsive design.</p></div>
+<div class="card"><h3>Data & Backend</h3><p>Secure DataStores, inventory systems, trading systems, leaderboards, and scalable player architecture.</p></div>
+</div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+<h2 class="section-title">Technical Skills</h2>
+<div class="skill">Lua Scripting<div class="bar"><div class="progress" style="width:95%"></div></div></div>
+<div class="skill">Game Architecture<div class="bar"><div class="progress" style="width:90%"></div></div></div>
+<div class="skill">UI / UX Design<div class="bar"><div class="progress" style="width:85%"></div></div></div>
+<div class="skill">Data Systems<div class="bar"><div class="progress" style="width:88%"></div></div></div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+<h2 class="section-title">Featured Projects</h2>
+<div class="grid">
+<div class="card">
+<h3>Westbound</h3>
+<p>Middle Western, Horses, Simplistic UI, Leaderstats</p>
+<img src="https://via.placeholder.com/420x280/00f7ff/ffffff?text=Arena+Clash" class="project-img">
+</div>
+<div class="card">
+<h3>Bad Business</h3>
+<p>PVP, Level system, User Friendly UI</p>
+<img src="https://via.placeholder.com/420x280/00f7ff/ffffff?text=Pet+Simulator" class="project-img">
+</div>
+<div class="card">
+<h3>3008</h3>
+<p>SCP, day/night cycle, resource economy, interactive UI, and survival mechanics.</p>
+<img src="https://via.placeholder.com/420x280/00f7ff/ffffff?text=Survival+Island+X" class="project-img">
+</div>
+</div>
+</section>
+
+<!-- STATS -->
+<section id="stats">
+<h2 class="section-title">Statistics</h2>
+<div class="stats">
+<div class="stat"><h3>3.9B+</h3><p>Total Visits</p></div>
+<div class="stat"><h3>4+</h3><p>Years Experience</p></div>
+<div class="stat"><h3>10+</h3><p>Systems Built</p></div>
+</div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+<h2 class="section-title">Testimonials</h2>
+<div class="testimonial">"Professional, fast, and highly skilled developer." – uglyburger</div>
+<div class="testimonial">"Delivered exactly what we needed, optimized perfectly." – Bad Business</div>
+<div class="testimonial">"Highly recommend for any Roblox project." – Moondrop Studios</div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+<h2 class="section-title">Contact</h2>
+<p style="text-align:center;">📧 numlkzs.dev@gmail.com</p>
+<a href="mailto:peterhicksmctaggart@gmail.com" class="btn">Email Me</a>
+</section>
+
+<footer>
+© 2026 Numlkzs | Roblox Developer Portfolio
+</footer>
+
+<script>
+// Typing animation
+const texts=["Roblox Developer","Lua Scripter","Systems Designer"];
+let i=0,j=0,txt="",letter="";
+(function type(){
+if(i===texts.length)i=0;
+txt=texts[i];
+letter=txt.slice(0,++j);
+document.getElementById("typing").textContent=letter;
+if(letter.length===txt.length){i++; j=0; setTimeout(type,1000);}
+else{setTimeout(type,100);}
+})();
+
+// Scroll reveal
+const sections=document.querySelectorAll("section");
+window.addEventListener("scroll",()=>{
+sections.forEach(sec=>{
+if(sec.getBoundingClientRect().top<window.innerHeight-100) sec.classList.add("show");
+});
+});
+
+// Mouse glow
+const cursor=document.querySelector(".cursor");
+document.addEventListener("mousemove",e=>{
+cursor.style.left=e.clientX+"px";
+cursor.style.top=e.clientY+"px";
+});
+
+// Particles
+const canvas=document.getElementById("bg");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let particles=[];
+for(let k=0;k<100;k++){
+particles.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2+1,dx:(Math.random()-0.5)*1.2,dy:(Math.random()-0.5)*1.2});
+}
+function animate(){
+ctx.clearRect(0,0,canvas.width,canvas.height);
+ctx.fillStyle="#00f7ff";
+particles.forEach(p=>{
+ctx.beginPath();
+ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+ctx.fill();
+p.x+=p.dx;p.y+=p.dy;
+if(p.x<0||p.x>canvas.width)p.dx*=-1;
+if(p.y<0||p.y>canvas.height)p.dy*=-1;
+});
+requestAnimationFrame(animate);
+}
+animate();
+</script>
+
+</body>
+</html>
